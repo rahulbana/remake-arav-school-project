@@ -1,0 +1,8 @@
+# Build
+docker build -t remake .
+
+# Run — pass the key as an env var
+docker run -p 8080:8080 -e OPENAI_API_KEY=sk-your-key remake
+
+# …or from a .env file
+docker run -p 8080:8080 --env-file .env remake
