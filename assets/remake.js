@@ -110,13 +110,42 @@
 		"Rendering the finished piece…"
 	];
 
-	function cycleStatus() {
-		var i = 0;
+	var progressBar = document.getElementById("progress-bar");
+	var statusPercent = document.getElementById("status-percent");
+	var progressTimer = null;
+
+	function setProgress(pct) {
+		pct = Math.max(0, Math.min(100, Math.round(pct)));
+		if (progressBar) progressBar.style.width = pct + "%";
+		if (statusPercent) statusPercent.textContent = pct + "%";
+	}
+
+	// Simulated determinate progress: eases toward ~90% while we wait for the
+	// server, updates the status label at milestones, then completeProgress()
+	// finishes it to 100% once the real response arrives.
+	function startProgress() {
+		var pct = 0;
+		setProgress(0);
 		statusText.textContent = STATUS_STEPS[0];
-		return setInterval(function () {
-			i = (i + 1) % STATUS_STEPS.length;
-			statusText.textContent = STATUS_STEPS[i];
-		}, 2500);
+		progressTimer = setInterval(function () {
+			// Slow down as we approach the 90% ceiling.
+			var step = pct < 50 ? 3.5 : pct < 75 ? 1.6 : 0.6;
+			pct = Math.min(90, pct + step);
+			setProgress(pct);
+			var idx = Math.min(STATUS_STEPS.length - 1, Math.floor(pct / 25));
+			statusText.textContent = STATUS_STEPS[idx];
+		}, 350);
+	}
+
+	function completeProgress(cb) {
+		if (progressTimer) { clearInterval(progressTimer); progressTimer = null; }
+		statusText.textContent = "Almost there…";
+		setProgress(100);
+		setTimeout(cb, 450);
+	}
+
+	function stopProgress() {
+		if (progressTimer) { clearInterval(progressTimer); progressTimer = null; }
 	}
 
 	function renderResult(data) {
@@ -168,7 +197,7 @@
 
 		generateBtn.disabled = true;
 		showResultShell();
-		var statusTimer = cycleStatus();
+		startProgress();
 
 		var fd = new FormData();
 		files.forEach(function (f) { fd.append("images", f, f.name); });
@@ -179,15 +208,16 @@
 				return res.json().then(function (body) { return { ok: res.ok, body: body }; });
 			})
 			.then(function (r) {
-				clearInterval(statusTimer);
 				if (!r.ok || r.body.error) {
+					stopProgress();
 					showError(r.body.error || "Something went wrong generating your product. Please try again.");
 				} else {
-					renderResult(r.body);
+					// Fill the bar to 100% before revealing the result.
+					completeProgress(function () { renderResult(r.body); });
 				}
 			})
 			.catch(function () {
-				clearInterval(statusTimer);
+				stopProgress();
 				showError("Could not reach the server. Check your connection and try again.");
 			})
 			.finally(function () {

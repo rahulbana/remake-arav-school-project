@@ -60,9 +60,15 @@
 				<!-- Result appears here after generation -->
 				<div class="result" id="result">
 					<div class="card">
-						<div class="status" id="result-status" style="display:none">
-							<span class="spinner"></span>
-							<span id="status-text">Reading your material…</span>
+						<div id="result-status" style="display:none">
+							<div class="status">
+								<span class="spinner"></span>
+								<span id="status-text">Reading your material…</span>
+								<span id="status-percent" style="margin-left:auto;font-variant-numeric:tabular-nums;font-weight:600;color:var(--primary)">0%</span>
+							</div>
+							<div class="progress" aria-hidden="true">
+								<div class="progress-bar" id="progress-bar"></div>
+							</div>
 						</div>
 						<div id="result-body" style="display:none">
 							<span class="badge" id="result-material">Material</span>
