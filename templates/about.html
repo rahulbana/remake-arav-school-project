@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}About ReMake — Trash Into Things Worth Making{% endblock %}
+{% block description %}ReMake is a student project that turns photos of waste into buildable, AI-generated product ideas — cutting landfill and sparking circular design.{% endblock %}
+
+{% block content %}
+<main>
+	<section class="hero noise-grid">
+		<div class="container page-head">
+			<span class="badge">Our story</span>
+			<h1 style="margin-top:16px">We think your trash deserves a second design.</h1>
+			<p class="muted">ReMake started as a school project with a simple question: what if a photo of something broken could show you the useful thing it wants to become? We built an AI studio that reads your waste and gives it a new life.</p>
+		</div>
+	</section>
+
+	<section class="section container">
+		<div class="two-col">
+			<div class="card prose">
+				<h2 style="margin-top:0">The problem</h2>
+				<p class="muted">Every home throws out materials that are still perfectly good — glass bottles, pallets, worn denim, tin cans, old electronics. Most of it heads to landfill not because it is useless, but because nobody sees what it could become.</p>
+			</div>
+			<div class="card prose">
+				<h2 style="margin-top:0">Our idea</h2>
+				<p class="muted">Point your camera at the scrap. Our AI identifies the material and condition, then designs and renders a real product you could build from it — with the tools, steps and effort spelled out. Less guessing, more making.</p>
+			</div>
+		</div>
+
+		<div class="card" style="margin-top:24px">
+			<div class="feature-grid" style="grid-template-columns:repeat(3,1fr)">
+				<div class="stat"><div class="num">1</div><div class="label">Photo to upload</div></div>
+				<div class="stat"><div class="num">~15s</div><div class="label">To a finished idea</div></div>
+				<div class="stat"><div class="num">∞</div><div class="label">Things worth making</div></div>
+			</div>
+		</div>
+
+		<div class="prose" style="margin-top:40px;max-width:46rem">
+			<h2>How it works</h2>
+			<p class="muted">Upload one or more photos of your waste. We send them to an OpenAI vision model that identifies the material, its condition and how recyclable it is. From that, the AI proposes a product, then generates a finished image of it so you can see exactly what you are aiming for — followed by a short, safe build guide.</p>
+			<h2>What we believe</h2>
+			<p class="muted">Good design should be circular. The most sustainable object is often the one you already own, seen differently. ReMake is our small push in that direction — and a fun way to prove that a camera and a bit of AI can turn waste into worth.</p>
+		</div>
+
+		<div style="margin-top:36px">
+			<a href="{{ url_for('home') }}#scan" class="btn btn-primary">Try it with your waste</a>
+		</div>
+	</section>
+</main>
+{% endblock %}
