@@ -26,9 +26,16 @@ gcloud builds submit --tag "${IMAGE_URI}" .
 
 # 2. Deploy the new image revision
 echo "--> 2. Deploying revision to Cloud Run..."
+# Update the OpenAI key too if it is exported in the shell (optional).
+ENV_FLAG=()
+if [[ -n "${OPENAI_API_KEY:-}" ]]; then
+  ENV_FLAG=(--set-env-vars "OPENAI_API_KEY=${OPENAI_API_KEY}")
+fi
+
 gcloud run deploy "${SERVICE_NAME}" \
   --image="${IMAGE_URI}" \
-  --region="${REGION}"
+  --region="${REGION}" \
+  "${ENV_FLAG[@]}"
 
 # 3. Output deployment summary
 echo "=========================================="

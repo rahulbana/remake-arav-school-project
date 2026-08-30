@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>{% block title %}ReMake — Turn Waste Photos Into Products{% endblock %}</title>
+	<meta name="description" content="{% block description %}Upload a photo of any scrap or waste material and get an AI-generated product you can build from it.{% endblock %}" />
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=DM+Sans:wght@400;500;600&display=swap" />
+	<link rel="stylesheet" href="{{ url_for('static', filename='theme.css') }}" />
+	<link rel="icon" href="/favicon.ico" type="image/x-icon" />
+</head>
+<body>
+	<header class="site-header">
+		<div class="container bar">
+			<a class="brand" href="{{ url_for('home') }}" aria-label="ReMake home">
+				<span class="brand-mark" aria-hidden="true">
+					<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 19H4.815a1.83 1.83 0 0 1-1.57-.881 1.785 1.785 0 0 1-.004-1.784L7.196 9.5"/><path d="M11 19h8.203a1.83 1.83 0 0 0 1.556-.89 1.784 1.784 0 0 0 0-1.775l-1.226-2.12"/><path d="m14 16-3 3 3 3"/><path d="M8.293 13.596 7.196 9.5 3.1 10.598"/><path d="m9.344 5.811 1.093-1.892A1.83 1.83 0 0 1 11.985 3a1.784 1.784 0 0 1 1.546.888l3.943 6.843"/><path d="m13.378 9.633 4.096 1.098 1.097-4.096"/></svg>
+				</span>
+				<span class="brand-name">ReMake</span>
+			</a>
+			<button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" onclick="var n=document.getElementById('nav');n.classList.toggle('open');this.setAttribute('aria-expanded',n.classList.contains('open'));">
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+			</button>
+			<nav class="nav" id="nav">
+				<a href="{{ url_for('home') }}" class="{{ 'active' if active_page == 'home' }}">Home</a>
+				<a href="{{ url_for('home') }}#scan" class="{{ 'active' if active_page == 'scan' }}">Scan waste</a>
+				<a href="{{ url_for('about') }}" class="{{ 'active' if active_page == 'about' }}">About</a>
+				<a href="{{ url_for('contact') }}" class="{{ 'active' if active_page == 'contact' }}">Contact</a>
+			</nav>
+		</div>
+	</header>
+
+	{% block content %}{% endblock %}
+
+	<footer class="site-footer">
+		<div class="container cols">
+			<div>
+				<a class="brand" href="{{ url_for('home') }}" style="text-decoration:none">
+					<span class="brand-mark" aria-hidden="true">
+						<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 19H4.815a1.83 1.83 0 0 1-1.57-.881 1.785 1.785 0 0 1-.004-1.784L7.196 9.5"/><path d="M11 19h8.203a1.83 1.83 0 0 0 1.556-.89 1.784 1.784 0 0 0 0-1.775l-1.226-2.12"/><path d="m14 16-3 3 3 3"/><path d="M8.293 13.596 7.196 9.5 3.1 10.598"/><path d="m9.344 5.811 1.093-1.892A1.83 1.83 0 0 1 11.985 3a1.784 1.784 0 0 1 1.546.888l3.943 6.843"/><path d="m13.378 9.633 4.096 1.098 1.097-4.096"/></svg>
+					</span>
+					<span class="brand-name">ReMake</span>
+				</a>
+				<p class="muted" style="margin-top:12px;max-width:22rem;font-size:14px">Circular design ideas, generated on demand. Photograph your waste and get a real product worth making.</p>
+			</div>
+			<div>
+				<h4>Explore</h4>
+				<a href="{{ url_for('home') }}">Home</a>
+				<a href="{{ url_for('home') }}#scan">Scan waste</a>
+				<a href="{{ url_for('about') }}">About us</a>
+				<a href="{{ url_for('contact') }}">Contact</a>
+			</div>
+			<div>
+				<h4>Good to know</h4>
+				<a href="{{ url_for('home') }}#how">How it works</a>
+				<a href="{{ url_for('contact') }}">Get in touch</a>
+				<span class="muted" style="font-size:13px;display:block;padding-top:6px">Always work safely with sharp, dusty or electrical waste.</span>
+			</div>
+		</div>
+		<div class="container copyright">
+			© {{ current_year }} ReMake · A student project turning trash into things worth making.
+		</div>
+	</footer>
+	{% block scripts %}{% endblock %}
+</body>
+</html>

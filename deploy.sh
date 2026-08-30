@@ -46,11 +46,22 @@ gcloud builds submit --tag "${IMAGE_URI}" .
 
 # 4. Deploy to Cloud Run
 echo "--> Step 4: Deploying to Cloud Run..."
+# Pass the OpenAI API key through only if it is set in the shell environment.
+# The key is never stored in the repo — export it before running this script:
+#   export OPENAI_API_KEY=sk-...
+ENV_FLAG=()
+if [[ -n "${OPENAI_API_KEY:-}" ]]; then
+  ENV_FLAG=(--set-env-vars "OPENAI_API_KEY=${OPENAI_API_KEY}")
+else
+  echo "    WARNING: OPENAI_API_KEY not set — the AI product generator will be disabled."
+fi
+
 gcloud run deploy "${SERVICE_NAME}" \
   --image="${IMAGE_URI}" \
   --platform=managed \
   --region="${REGION}" \
   --port="${CONTAINER_PORT}" \
+  "${ENV_FLAG[@]}" \
   --allow-unauthenticated
 
 # 5. Retrieve Service URL

@@ -1,220 +1,109 @@
+{% extends "base.html" %}
+{% block title %}ReMake — Turn Waste Photos Into Products{% endblock %}
 
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charSet="utf-8"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1"/>
-		<link rel="preload" as="image" href="/assets/upcycle-hero-Ck4Ju6WR.jpg"/>
-		<link rel="stylesheet" href="/assets/styles-DeCk7oFi.css" data-precedence="default"/>
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=DM+Sans:wght@400;500;600&amp;display=swap" data-precedence="default"/>
-		<title>ReMake — Turn Waste Photos Into Product Ideas</title>
-		<meta name="author" content="Lovable"/>
-		<meta property="og:type" content="website"/>
-		<meta name="twitter:card" content="summary_large_image"/>
-		<meta name="twitter:site" content="@Lovable"/>
-		<meta name="description" content="Snap a photo of any scrap or waste material and get AI-generated ideas for useful products you can build from it, with tools, steps and impact."/>
-		<meta property="og:title" content="ReMake — Turn Waste Photos Into Product Ideas"/>
-		<meta property="og:description" content="Upload a photo of your waste material and get buildable upcycling product ideas in seconds."/>
-		<link rel="modulepreload" href="/assets/index-gU6V9uds.js"/>
-		<link rel="modulepreload" href="/assets/routes-DEqWeq2d.js"/>
-		<link rel="icon" href="/favicon.ico" type="image/x-icon"/>
-		<link rel="preconnect" href="https://fonts.googleapis.com"/>
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
-<style>
-	@font-face {
-		font-family: 'CameraPlainVariable';
-		src: url('https://cdn.gpteng.co/mcp-widgets/v1/fonts/CameraPlainVariable.woff2') format('woff2');
-		font-weight: 100 900;
-		font-style: normal;
-		font-display: swap;
-	}
+{% block content %}
+<main>
+	<!-- Hero -->
+	<section class="hero noise-grid">
+		<div class="container hero-grid">
+			<div>
+				<span class="badge">
+					<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/></svg>
+					AI upcycling studio
+				</span>
+				<h1 style="margin-top:20px">Photograph your trash.<span class="hero-text" style="display:block">Get a product worth making.</span></h1>
+				<p class="lead muted">Point your camera at a broken pallet, a pile of bottles, old denim or e-waste. Our AI reads the material and generates a real product you could build from it — shown as a finished image, with the tools and steps to get there.</p>
+				<div style="margin-top:30px;display:flex;flex-wrap:wrap;gap:12px">
+					<a href="#scan" class="btn btn-primary">
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"/><circle cx="12" cy="13" r="3"/></svg>
+						Scan my waste
+					</a>
+					<a href="#how" class="btn btn-outline">How it works</a>
+				</div>
+			</div>
+			<div class="hero-img">
+				<img src="{{ url_for('static', filename='upcycle-hero-Ck4Ju6WR.jpg') }}" alt="Lamp, planter, stool and shelf handmade from bottles, tin cans, pallets and cardboard" width="1600" height="1104" />
+			</div>
+		</div>
+	</section>
 
-	#lovable-badge {
-		--badge-bg: #1b1b1b;
-		--badge-text: #c5c1b9;
-		--badge-text-hover: #dcdad5;
-		--badge-radius: 6px;
-		--badge-padding: 8px;
-		--badge-gap: 6px;
-		--badge-shadow: 
-			0 0 0 1px rgba(0, 0, 0, 0.88),
-			0 1px 0 0 rgba(0, 0, 0, 0.04),
-			0 2px 2px -1px rgba(0, 0, 0, 0.08),
-			0 4px 4px -2px rgba(0, 0, 0, 0.08),
-			0 8px 8px -4px rgba(0, 0, 0, 0.08),
-			0 16px 16px -8px rgba(0, 0, 0, 0.08);
-		--badge-transition-duration: 0.2s;
-		--badge-transition-easing: cubic-bezier(0.16, 1, 0.32, 1);
-		--focus-color: #575ECF;
-		--focus-offset: 2px;
-		--focus-width: 2px;
-		
-		position: fixed;
-		bottom: 12px;
-		right: 12px;
-		height: 24px;
-		display: flex;
-		align-items: center;
-		z-index: 1000000;
-		background-color: var(--badge-bg) !important;
-		color: var(--badge-text) !important;
-		border-radius: var(--badge-radius);
-		box-shadow: var(--badge-shadow) !important;
-		font-size: 12px;
-		font-family: CameraPlainVariable, "CameraPlainVariable Fallback", -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-		font-weight: 400 !important;
-		text-transform: none !important;
-		font-feature-settings: normal !important;
-		transform: translateZ(0);
-		will-change: transform, opacity;
-	}
+	<!-- Scan / upload -->
+	<section class="section container" id="scan">
+		<div class="scan-grid">
+			<!-- Upload card -->
+			<div class="card surface-gradient">
+				<h2 style="font-size:1.25rem">1. Upload a photo</h2>
+				<p class="muted" style="font-size:14px;margin-top:4px">Good light and a clear view of the material give the best result. You can add more than one photo.</p>
 
-	#lovable-badge-cta {
-		display: flex;
-		align-items: center;
-		gap: var(--badge-gap);
-		padding: 0 var(--badge-padding);
-		height: 100%;
-		color: inherit;
-		text-decoration: none;
-		white-space: nowrap;
-		border-radius: var(--badge-radius) 0 0 var(--badge-radius);
-		transition: 
-			background-color var(--badge-transition-duration) ease,
-			color var(--badge-transition-duration) ease,
-			transform 0.1s ease;
-	}
+				<form id="scan-form">
+					<input type="file" id="file-input" name="images" accept="image/*" capture="environment" multiple hidden />
+					<div class="dropzone" id="dropzone" role="button" tabindex="0">
+						<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m17 8-5-5-5 5"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/></svg>
+						<span style="font-size:14px;font-weight:600">Take or choose a photo</span>
+						<span class="muted" style="font-size:12px">JPEG, PNG or WebP · up to 8 MB each</span>
+					</div>
+					<div class="thumbs" id="thumbs"></div>
 
-	#lovable-badge-cta:hover {
-		background: rgba(255, 255, 255, 0.04);
-		color: var(--badge-text-hover);
-	}
+					<label class="field-label" for="note">Anything to add? <span class="muted" style="font-weight:400">(optional)</span></label>
+					<textarea id="note" name="note" rows="3" maxlength="300" placeholder="e.g. about 12 glass bottles, I have basic hand tools only"></textarea>
 
-	#lovable-badge-cta:active {
-		transform: scale(0.98);
-	}
+					<button type="submit" id="generate-btn" class="btn btn-primary" style="width:100%;margin-top:18px" disabled>
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/></svg>
+						Generate my product
+					</button>
+					<p class="muted" style="font-size:12px;margin-top:10px;text-align:center">Powered by OpenAI · images are used only to generate your idea.</p>
+				</form>
+			</div>
 
-	#lovable-badge-cta:focus {
-		outline: none;
-	}
+			<!-- Result / how-it-works -->
+			<div>
+				<!-- Result appears here after generation -->
+				<div class="result" id="result">
+					<div class="card">
+						<div class="status" id="result-status" style="display:none">
+							<span class="spinner"></span>
+							<span id="status-text">Reading your material…</span>
+						</div>
+						<div id="result-body" style="display:none">
+							<span class="badge" id="result-material">Material</span>
+							<h2 id="result-name" style="margin-top:14px;font-size:1.4rem"></h2>
+							<p class="muted" id="result-desc" style="margin-top:8px"></p>
+							<div class="result-img" style="margin-top:16px">
+								<img id="result-image" alt="AI-generated product made from your waste" />
+							</div>
+							<div id="result-meta" style="margin-top:16px"></div>
+							<h3 style="margin-top:18px;font-size:1rem">How to build it</h3>
+							<ol class="steps" id="result-steps"></ol>
+							<button class="btn btn-outline" style="margin-top:18px;width:100%" onclick="document.getElementById('scan-form').scrollIntoView({behavior:'smooth'})">Scan another item</button>
+						</div>
+						<div class="alert alert-error" id="result-error" style="display:none"></div>
+					</div>
+				</div>
 
-	#lovable-badge-cta:focus-visible {
-		outline: var(--focus-width) solid var(--focus-color);
-		outline-offset: var(--focus-offset);
-		z-index: 1;
-	}
+				<!-- Static how-it-works (hidden once a result is shown) -->
+				<div id="how" class="feature-grid" data-howblock>
+					<div class="card">
+						<span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"/><circle cx="12" cy="13" r="3"/></svg></span>
+						<h3>Snap it</h3>
+						<p class="muted" style="font-size:14px">Photograph the scrap exactly as it is — dirty, broken, mixed.</p>
+					</div>
+					<div class="card">
+						<span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/></svg></span>
+						<h3>AI reads it</h3>
+						<p class="muted" style="font-size:14px">Material, condition and recyclability get identified from the image.</p>
+					</div>
+					<div class="card">
+						<span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 12-9.373 9.373a1 1 0 0 1-3.001-3L12 9"/><path d="m18 15 4-4"/><path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172v-.344a2 2 0 0 0-.586-1.414l-1.657-1.657A6 6 0 0 0 12.516 3H9l1.243 1.243A6 6 0 0 1 12 8.485V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5"/></svg></span>
+						<h3>See the product</h3>
+						<p class="muted" style="font-size:14px">Get a finished product image plus the tools and steps to make it.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</main>
+{% endblock %}
 
-	#lovable-badge-text {
-		line-height: 1;
-	}
-
-	#lovable-badge-divider {
-		width: 1px;
-		height: 24px;
-		background-color: rgba(255, 255, 255, 0.04);
-		flex-shrink: 0;
-	}
-
-	#lovable-badge-close {
-		width: 24px;
-		height: 24px;
-		min-width: 24px;
-		min-height: 24px;
-		cursor: pointer;
-		background: none;
-		border: none;
-		padding: 0;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		border-radius: 0 var(--badge-radius) var(--badge-radius) 0;
-		flex-shrink: 0;
-		transition: 
-			background-color var(--badge-transition-duration) ease,
-			transform 0.1s ease;
-	}
-
-	#lovable-badge-close:hover {
-		background: rgba(255, 255, 255, 0.04);
-	}
-
-	#lovable-badge-close:active {
-		transform: scale(0.92);
-	}
-
-	#lovable-badge-close:focus {
-		outline: none;
-	}
-
-	#lovable-badge-close:focus-visible {
-		outline: var(--focus-width) solid var(--focus-color);
-		outline-offset: calc(var(--focus-offset) * -1);
-		z-index: 1;
-	}
-
-	#lovable-badge-close svg path {
-		fill: var(--badge-text);
-		transition: fill var(--badge-transition-duration) ease;
-	}
-
-	#lovable-badge-close:hover svg path {
-		fill: var(--badge-text-hover);
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		#lovable-badge-cta,
-		#lovable-badge-close,
-		#lovable-badge-close svg path {
-			transition: none;
-		}
-		
-		#lovable-badge-cta:active,
-		#lovable-badge-close:active {
-			transform: none;
-		}
-	}
-
-	@media (prefers-contrast: high) {
-		#lovable-badge {
-			--badge-bg: #000;
-			--badge-text: #fff;
-			--badge-text-hover: #fff;
-			border: 2px solid currentColor;
-		}
-		
-		#lovable-badge-cta:focus-visible,
-		#lovable-badge-close:focus-visible {
-			outline-width: 3px;
-		}
-	}
-</style>
-<script defer src="/assets/flock.js" data-proxy-url="/~api/analytics"></script><meta name="twitter:title" content="ReMake — Turn Waste Photos Into Product Ideas"><meta name="twitter:description" content="Upload a photo of your waste material and get buildable upcycling product ideas in seconds."><meta property="og:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/aef32f4df87f027fb30998177ab99645/id-preview-bfc0326c--6cbf57f7-2517-4a2e-a5af-fd30c17eb6e7.lovable.app-1788006403629.png"><meta name="twitter:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/aef32f4df87f027fb30998177ab99645/id-preview-bfc0326c--6cbf57f7-2517-4a2e-a5af-fd30c17eb6e7.lovable.app-1788006403629.png"></head><body><!--$--><main class="min-h-screen bg-background"><header class="border-b border-border/60 bg-card/70 backdrop-blur"><div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-4"><div class="flex items-center gap-2"><span class="flex size-9 items-center justify-center rounded-xl bg-hero-gradient shadow-glow"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-recycle size-5 text-primary-foreground" aria-hidden="true"><path d="M7 19H4.815a1.83 1.83 0 0 1-1.57-.881 1.785 1.785 0 0 1-.004-1.784L7.196 9.5"></path><path d="M11 19h8.203a1.83 1.83 0 0 0 1.556-.89 1.784 1.784 0 0 0 0-1.775l-1.226-2.12"></path><path d="m14 16-3 3 3 3"></path><path d="M8.293 13.596 7.196 9.5 3.1 10.598"></path><path d="m9.344 5.811 1.093-1.892A1.83 1.83 0 0 1 11.985 3a1.784 1.784 0 0 1 1.546.888l3.943 6.843"></path><path d="m13.378 9.633 4.096 1.098 1.097-4.096"></path></svg></span><span class="font-display text-lg font-bold">ReMake</span></div><p class="hidden text-sm text-muted-foreground sm:block">Waste in. Useful products out.</p></div></header><section class="noise-grid border-b border-border/60"><div class="mx-auto grid max-w-6xl gap-10 px-5 py-14 lg:grid-cols-[1.05fr_1fr] lg:items-center lg:py-20"><div><span class="inline-flex items-center gap-2 rounded-full border border-primary/25 bg-primary/10 px-3 py-1 text-xs font-medium uppercase tracking-widest text-primary"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles size-3.5" aria-hidden="true"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"></path><path d="M20 2v4"></path><path d="M22 4h-4"></path><circle cx="4" cy="20" r="2"></circle></svg> AI upcycling studio</span><h1 class="mt-5 text-4xl font-bold leading-[1.05] sm:text-6xl">Photograph your trash.<span class="block bg-hero-gradient bg-clip-text text-transparent">Get things worth making.</span></h1><p class="mt-5 max-w-xl text-lg text-muted-foreground">Point your camera at a broken pallet, a pile of bottles, old denim or e-waste. The AI identifies the material and returns buildable product ideas — with tools, steps, effort and the impact you save.</p><div class="mt-8 flex flex-wrap gap-3"><button class="inline-flex items-center gap-2 rounded-full bg-hero-gradient px-6 py-3 text-sm font-semibold text-primary-foreground shadow-glow transition-transform hover:-translate-y-0.5"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-camera size-4" aria-hidden="true"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"></path><circle cx="12" cy="13" r="3"></circle></svg> Scan my waste</button><a href="#how" class="inline-flex items-center gap-2 rounded-full border border-border bg-card px-6 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-secondary">How it works</a></div></div><div class="overflow-hidden rounded-3xl border border-border/70 shadow-soft"><img src="/assets/upcycle-hero-Ck4Ju6WR.jpg" alt="Lamp, planter, stool and shelf handmade from bottles, tin cans, pallets and cardboard" width="1600" height="1104" class="h-full w-full object-cover"/></div></div></section><section class="mx-auto max-w-6xl px-5 py-14" id="scan"><div class="grid gap-8 lg:grid-cols-[minmax(0,380px)_1fr]"><div class="rounded-3xl border border-border/70 bg-surface-gradient p-6 shadow-soft"><h2 class="text-xl font-semibold">1. Upload a photo</h2><p class="mt-1 text-sm text-muted-foreground">Good light and a clear view of the material give the best ideas.</p><input type="file" accept="image/*" capture="environment" class="hidden"/><button class="mt-5 flex w-full flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed border-primary/30 bg-card/60 px-4 py-8 text-center transition-colors hover:border-primary/60 hover:bg-card"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-upload size-7 text-primary" aria-hidden="true"><path d="M12 3v12"></path><path d="m17 8-5-5-5 5"></path><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path></svg><span class="text-sm font-medium">Take or choose a photo</span><span class="text-xs text-muted-foreground">JPEG, PNG or WebP · up to 8 MB</span></button><label class="mt-5 block text-sm font-medium" for="note">Anything to add? <span class="font-normal text-muted-foreground">(optional)</span></label><textarea id="note" rows="3" maxLength="300" placeholder="e.g. about 12 glass bottles, I have basic hand tools only" class="mt-2 w-full resize-none rounded-xl border border-input bg-card px-3 py-2 text-sm outline-none focus:border-ring focus:ring-2 focus:ring-ring/25"></textarea><button disabled="" class="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-hero-gradient px-6 py-3 text-sm font-semibold text-primary-foreground shadow-glow transition-transform enabled:hover:-translate-y-0.5 disabled:opacity-50"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles size-4" aria-hidden="true"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"></path><path d="M20 2v4"></path><path d="M22 4h-4"></path><circle cx="4" cy="20" r="2"></circle></svg> Generate product ideas</button></div><div class="min-h-[320px]"><div id="how" class="grid gap-4 sm:grid-cols-3"><div class="rounded-2xl border border-border/70 bg-card p-5 shadow-soft"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-camera size-5 text-accent" aria-hidden="true"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"></path><circle cx="12" cy="13" r="3"></circle></svg><h3 class="mt-3 font-semibold">Snap it</h3><p class="mt-1 text-sm text-muted-foreground">Photograph the scrap exactly as it is — dirty, broken, mixed.</p></div><div class="rounded-2xl border border-border/70 bg-card p-5 shadow-soft"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles size-5 text-accent" aria-hidden="true"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"></path><path d="M20 2v4"></path><path d="M22 4h-4"></path><circle cx="4" cy="20" r="2"></circle></svg><h3 class="mt-3 font-semibold">AI reads it</h3><p class="mt-1 text-sm text-muted-foreground">Material, condition and recyclability get identified from the image.</p></div><div class="rounded-2xl border border-border/70 bg-card p-5 shadow-soft"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-hammer size-5 text-accent" aria-hidden="true"><path d="m15 12-9.373 9.373a1 1 0 0 1-3.001-3L12 9"></path><path d="m18 15 4-4"></path><path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172v-.344a2 2 0 0 0-.586-1.414l-1.657-1.657A6 6 0 0 0 12.516 3H9l1.243 1.243A6 6 0 0 1 12 8.485V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5"></path></svg><h3 class="mt-3 font-semibold">Build it</h3><p class="mt-1 text-sm text-muted-foreground">Get four products with tools, steps, effort and impact saved.</p></div></div></div></div></section><footer class="border-t border-border/60 bg-card/60"><div class="mx-auto max-w-6xl px-5 py-8 text-sm text-muted-foreground">ReMake · circular design ideas, generated on demand. Always work safely with sharp, dusty or electrical waste.</div></footer></main><script>(function(a,f){let l;try{l=JSON.parse(sessionStorage.getItem(a)||"{}")}catch{return}const n=l?.[f||history.state?.__TSR_key];let c=!1;for(const t in n){const e=n[t],o=e?.scrollX,s=e?.scrollY;if(Number.isFinite(o)&&Number.isFinite(s)){if(t==="window")scrollTo(o,s),c=!0;else if(t)try{const r=document.querySelector(t);r&&(r.scrollLeft=o,r.scrollTop=s)}catch{}}}if(c)return;const i=location.hash.slice(1);if(i){const t=history.state?.__hashScrollIntoViewOptions??!0;if(t){const e=document.getElementById(i);e&&e.scrollIntoView(t)}return}scrollTo(0,0)})("tsr-scroll-restoration-v1_3");document.currentScript.remove()</script><!--/$--><script class="$tsr" id="$tsr-stream-barrier">(self.$R=self.$R||{})["tsr"]=[];self.$_TSR={h(){this.hydrated=!0,this.c()},e(){this.streamEnded=!0,this.c()},c(){this.hydrated&&this.streamEnded&&(delete self.$_TSR,delete self.$R.tsr)},p(e){this.initialized?e():this.buffer.push(e)},buffer:[]};$_TSR.router=($R=>$R[0]={manifest:$R[1]={routes:$R[2]={__root__:$R[3]={preloads:$R[4]=["/assets/index-gU6V9uds.js"],scripts:$R[5]=[$R[6]={attrs:$R[7]={type:"module",async:!0,src:"/assets/index-gU6V9uds.js"}}]},"/":$R[8]={preloads:$R[9]=["/assets/routes-DEqWeq2d.js"]}}},matches:$R[10]=[$R[11]={i:"__root__",u:1788077384432,s:"success",ssr:!0},$R[12]={i:"",u:1788077384432,s:"success",ssr:!0}],lastMatchId:""})($R["tsr"]);$_TSR.e();document.currentScript.remove()</script><script type="module" async="" src="/assets/index-gU6V9uds.js"></script>
-
-<script>
-	// Don't show the lovable-badge if the page is in an iframe or if it's being rendered by puppeteer (screenshot service)
-	if (window.self !== window.top || navigator.userAgent.includes('puppeteer')) {
-		var badge = document.getElementById('lovable-badge');
-		if (badge) {
-			badge.style.display = 'none';
-		}
-	}
-
-	// Add click event listener to close button with animation
-	var closeButton = document.getElementById('lovable-badge-close');
-	if (closeButton) {
-		closeButton.addEventListener('click', function(event) {
-			event.preventDefault();
-			event.stopPropagation();
-			var badge = document.getElementById('lovable-badge');
-			if (badge) {
-				badge.classList.add('closing');
-				setTimeout(function() {
-					if (badge) {
-						badge.style.display = 'none';
-					}
-				}, 240);
-			}
-		});
-	}
-</script>
-</body></html>
+{% block scripts %}
+<script src="{{ url_for('static', filename='remake.js') }}"></script>
+{% endblock %}

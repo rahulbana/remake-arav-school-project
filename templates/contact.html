@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Contact ReMake{% endblock %}
+{% block description %}Get in touch with the ReMake team — questions, feedback or ideas for turning waste into products.{% endblock %}
+
+{% block content %}
+<main>
+	<section class="hero noise-grid">
+		<div class="container page-head">
+			<span class="badge">Say hello</span>
+			<h1 style="margin-top:16px">Got a question or an idea?</h1>
+			<p class="muted">We would love to hear what you made, what you tried to scan, or how we could make ReMake better.</p>
+		</div>
+	</section>
+
+	<section class="section container">
+		<div class="scan-grid">
+			<div class="card surface-gradient">
+				<h2 style="font-size:1.25rem;margin-top:0">Send us a message</h2>
+				<p class="muted" style="font-size:14px;margin-top:4px">Fill this in and we'll get back to you.</p>
+
+				{% if sent %}
+				<div class="alert alert-ok" style="margin-top:16px">Thanks{{ ' ' + name if name }}! Your message has been received.</div>
+				{% endif %}
+
+				<form method="post" action="{{ url_for('contact') }}">
+					<label class="field-label" for="name">Name</label>
+					<input type="text" id="name" name="name" required placeholder="Your name" />
+
+					<label class="field-label" for="email">Email</label>
+					<input type="email" id="email" name="email" required placeholder="you@example.com" />
+
+					<label class="field-label" for="message">Message</label>
+					<textarea id="message" name="message" rows="5" required placeholder="What's on your mind?"></textarea>
+
+					<button type="submit" class="btn btn-primary" style="width:100%;margin-top:18px">Send message</button>
+				</form>
+			</div>
+
+			<div>
+				<div class="card">
+					<h3 style="margin-top:0">Other ways to reach us</h3>
+					<p class="muted" style="font-size:14px">This is a student project, so the quickest way is the form. You can also find us here:</p>
+					<div style="margin-top:14px">
+						<p style="margin:8px 0"><strong>Email</strong><br /><span class="muted">hello@remake-project.example</span></p>
+						<p style="margin:8px 0"><strong>Project</strong><br /><span class="muted">ReMake — a school project on circular design</span></p>
+						<p style="margin:8px 0"><strong>Response time</strong><br /><span class="muted">Usually within a few days</span></p>
+					</div>
+				</div>
+				<div class="card" style="margin-top:16px">
+					<h3 style="margin-top:0">Prefer to just try it?</h3>
+					<p class="muted" style="font-size:14px">Skip the form and scan a piece of waste right now.</p>
+					<a href="{{ url_for('home') }}#scan" class="btn btn-outline" style="margin-top:12px">Scan my waste</a>
+				</div>
+			</div>
+		</div>
+	</section>
+</main>
+{% endblock %}
