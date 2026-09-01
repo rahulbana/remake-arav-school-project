@@ -24,4 +24,4 @@ USER appuser
 EXPOSE 8080
 
 # Run with Gunicorn using 4 workers bound to all interfaces
-CMD ["gunicorn", "--workers=4", "--bind=0.0.0.0:8080", "app:app"]
+CMD ["gunicorn", "--workers=4", "--timeout=200", "--bind=0.0.0.0:8080", "app:app"]

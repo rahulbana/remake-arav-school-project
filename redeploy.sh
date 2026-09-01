@@ -7,9 +7,9 @@ set -euo pipefail
 # ==========================================
 PROJECT_ID=$(gcloud config get-value project)
 REGION="us-central1"
-SERVICE_NAME="lifestyle-app-service"
-REPO_NAME="app-repo"
-IMAGE_NAME="lifestyle-app"
+SERVICE_NAME="remake-app-service"
+REPO_NAME="remake-repo"
+IMAGE_NAME="remake-app"
 TAG="rev-$(date +%Y%m%d%H%M%S)" # Auto-generates unique timestamp version
 
 IMAGE_URI="${REGION}-docker.pkg.dev/${PROJECT_ID}/${REPO_NAME}/${IMAGE_NAME}:${TAG}"

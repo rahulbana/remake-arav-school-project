@@ -7,9 +7,9 @@ set -euo pipefail
 # ==========================================
 PROJECT_ID=$(gcloud config get-value project)
 REGION="us-central1"
-SERVICE_NAME="lifestyle-app-service"
-REPO_NAME="app-repo"
-IMAGE_NAME="lifestyle-app"
+SERVICE_NAME="remake-app-service"
+REPO_NAME="remake-repo"
+IMAGE_NAME="remake-app"
 TAG="v$(date +%Y%m%d%H%M%S)" # Timestamp-based tag for unique builds
 CONTAINER_PORT="8080"
 
